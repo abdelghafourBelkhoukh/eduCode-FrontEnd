@@ -19,9 +19,10 @@ export class LoginComponent {
   login() {
     console.log(this.email, this.password, this.selectedRole);
     this.loginService.login(this.email, this.password, this.selectedRole).subscribe((response: any) => {
+      console.log(response);
       if (response.token) {
-        this.loginService.loggedIn = true;
         localStorage.setItem('token', response.token);
+        this.loginService.loggedIn = true;
         switch (response.role) {
           case 'PLATFORM_ADMIN':
             localStorage.setItem('role', response.role);
@@ -41,7 +42,7 @@ export class LoginComponent {
             break;
           case 'STUDENT':
             localStorage.setItem('role', response.role);
-            this.route.navigate(['student']);
+            this.route.navigate(['/']);
             break;
           default:
             window.location.href = '/login';

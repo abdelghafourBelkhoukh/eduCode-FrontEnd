@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class LoginService {
-  loggedIn : boolean = false;
+  loggedIn = localStorage.getItem('token') != null;
 
   constructor(private httpClient: HttpClient) { }
 
