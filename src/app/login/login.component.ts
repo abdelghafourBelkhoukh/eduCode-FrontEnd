@@ -38,7 +38,7 @@ export class LoginComponent {
             break;
           case 'FORMATEUR':
             localStorage.setItem('role', response.role);
-            window.location.href = '/formateur';
+            this.route.navigate(['/']);
             break;
           case 'STUDENT':
             localStorage.setItem('role', response.role);
