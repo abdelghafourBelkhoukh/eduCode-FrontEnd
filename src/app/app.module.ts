@@ -10,6 +10,9 @@ import {HeaderComponent} from "./header/header.component";
 import {HomeComponent} from "./home/home.component";
 import {ExamanComponent} from "./examan/examan.component";
 import {ExamDetailsComponent} from "./exam-details/exam-details.component";
+import {PlatformAdminComponent} from "./dashboad/platform-admin/platform-admin.component";
+import {SchoolComponent} from "./dashboad/school/school.component";
+import {SchoolAdminComponent} from "./dashboad/school-admin/school-admin.component";
 
 
 @NgModule({
@@ -19,7 +22,10 @@ import {ExamDetailsComponent} from "./exam-details/exam-details.component";
     HeaderComponent,
     HomeComponent,
     ExamanComponent,
-    ExamDetailsComponent
+    ExamDetailsComponent,
+    PlatformAdminComponent,
+    SchoolComponent,
+    SchoolAdminComponent
   ],
   imports: [
     BrowserModule,

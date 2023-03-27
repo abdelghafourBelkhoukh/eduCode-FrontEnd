@@ -26,15 +26,15 @@ export class LoginComponent {
         switch (response.role) {
           case 'PLATFORM_ADMIN':
             localStorage.setItem('role', response.role);
-            window.location.href = '/platform-admin';
+            this.route.navigate(['/']);
             break;
           case 'SCHOOL':
             localStorage.setItem('role', response.role);
-            window.location.href = '/school';
+            this.route.navigate(['/']);
             break;
           case 'SCHOOL_ADMIN':
             localStorage.setItem('role', response.role);
-            window.location.href = '/school-admin';
+            this.route.navigate(['/']);
             break;
           case 'FORMATEUR':
             localStorage.setItem('role', response.role);
