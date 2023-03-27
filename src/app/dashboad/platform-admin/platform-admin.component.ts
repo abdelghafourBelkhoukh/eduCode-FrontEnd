@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {SchoolService} from "../../core/services/school/school.service";
+import {LoginService} from "../../core/services/login/login.service";
 
 @Component({
   selector: 'app-platform-admin',
@@ -8,8 +9,7 @@ import {SchoolService} from "../../core/services/school/school.service";
 })
 export class PlatformAdminComponent {
 
-  constructor(private schoolService: SchoolService  ) {
-  }
+  constructor(private schoolService: SchoolService , private loginService: LoginService) {}
 
   ngOnInit(): void {
     this.getSchools();
@@ -106,5 +106,9 @@ export class PlatformAdminComponent {
 
   openPopUp() {
     this.popupSchool = true;
+  }
+
+  logout() {
+    this.loginService.logout();
   }
 }

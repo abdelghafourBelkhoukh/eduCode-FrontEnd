@@ -12,4 +12,10 @@ export class LoginService {
   login(email: string | undefined, password: string | undefined, role: string | undefined) {
     return this.httpClient.post('http://localhost:8080/api/auth/login', {email, password, role});
   }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    this.loggedIn = false;
+  }
 }
