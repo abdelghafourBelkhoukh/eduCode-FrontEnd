@@ -33,4 +33,9 @@ export class StudentService {
         return this.http.get('http://localhost:8080/api/school-admin/' + email, {headers: {'Authorization': 'Bearer ' + this.token}});
     }
   }
+
+
+  getStudents() {
+    return this.http.get('http://localhost:8080/api/student', {headers: {'Authorization': 'Bearer ' + this.token}});
+  }
 }
