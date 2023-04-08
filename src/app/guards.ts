@@ -5,21 +5,92 @@ import {LoginService} from "./core/services/login/login.service";
 export const isAuthorized: CanActivateFn = () => {
   const loginService = inject(LoginService);
   const router = inject(Router)
-  console.log("logged? :"+loginService.loggedIn)
-  console.log("role :"+localStorage.getItem('role'))
-  if(loginService.loggedIn){
-    switch (localStorage.getItem('role')) {
-      case 'PLATFORM_ADMIN':
-        return router.parseUrl('/platform-admin');
-      case 'SCHOOL':
-        return router.parseUrl('/school');
-      case 'SCHOOL_ADMIN':
-        return router.parseUrl('/school-admin');
-      case 'FORMATEUR':
-        return router.parseUrl('/formateur');
-      case 'STUDENT':
-        return router.parseUrl('/');
-    }
+
+  if (!loginService.loggedIn) {
+    return true; // user is logged in, allow access to the route
   }
-  return true;
+
+  router.navigate(['/']);
+  return false; // user is not logged in, prevent access to the route
 }
+
+export const isPlatformAdmin: CanActivateFn = () => {
+  const loginService = inject(LoginService);
+  const router = inject(Router)
+  console.log("logged? :" + loginService.loggedIn)
+  console.log("role :" + localStorage.getItem('role'))
+  if (!loginService.loggedIn) {
+    router.navigate(['/login']);
+    return false; // user is not logged in, prevent access to the route
+  }
+  if (localStorage.getItem('role') !== 'PLATFORM_ADMIN') {
+    router.navigate(['/']);
+  }
+  return true; // user is logged in, allow access to the route
+}
+
+export const isSchool: CanActivateFn = () => {
+  const loginService = inject(LoginService);
+  const router = inject(Router)
+  console.log("logged? :" + loginService.loggedIn)
+  console.log("role :" + localStorage.getItem('role'))
+  if (!loginService.loggedIn) {
+    router.navigate(['/login']);
+    return false; // user is not logged in, prevent access to the route
+  }
+  if (localStorage.getItem('role') !== 'SCHOOL') {
+    router.navigate(['/']);
+  }
+
+  return true; // user is logged in, allow access to the route
+}
+
+export const isSchoolAdmin: CanActivateFn = () => {
+  const loginService = inject(LoginService);
+  const router = inject(Router)
+  console.log("logged? :" + loginService.loggedIn)
+  console.log("role :" + localStorage.getItem('role'))
+  if (!loginService.loggedIn) {
+    router.navigate(['/login']);
+    return false; // user is not logged in, prevent access to the route
+  }
+  if (localStorage.getItem('role') !== 'SCHOOL_ADMIN') {
+    router.navigate(['/']);
+  }
+  return true; // user is logged in, allow access to the route
+}
+
+export const isFormateur: CanActivateFn = () => {
+  const loginService = inject(LoginService);
+  const router = inject(Router)
+  console.log("logged? :" + loginService.loggedIn)
+  console.log("role :" + localStorage.getItem('role'))
+  if (!loginService.loggedIn) {
+    router.navigate(['/login']);
+    return false; // user is not logged in, prevent access to the route
+  }
+  if (localStorage.getItem('role') !== 'FORMATEUR') {
+    router.navigate(['/']);
+  }
+
+  return true; // user is logged in, allow access to the route
+}
+
+export const isStudent: CanActivateFn = () => {
+  const loginService = inject(LoginService);
+  const router = inject(Router)
+  console.log("logged? :" + loginService.loggedIn)
+  console.log("role :" + localStorage.getItem('role'))
+  if (!loginService.loggedIn) {
+    router.navigate(['/login']);
+    return false; // user is not logged in, prevent access to the route
+  }
+  if (localStorage.getItem('role') != 'STUDENT') {
+    console.log("role :" + localStorage.getItem('role'))
+    router.navigate(['/']);
+  }
+
+  return true; // user is logged in, allow access to the route
+}
+
+

@@ -13,6 +13,8 @@ import {ExamDetailsComponent} from "./exam-details/exam-details.component";
 import {PlatformAdminComponent} from "./dashboad/platform-admin/platform-admin.component";
 import {SchoolComponent} from "./dashboad/school/school.component";
 import {SchoolAdminComponent} from "./dashboad/school-admin/school-admin.component";
+import {RenduComponent} from "./rendu/rendu.component";
+import {RenduFormateurComponent} from "./rendu-formateur/rendu-formateur.component";
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import {SchoolAdminComponent} from "./dashboad/school-admin/school-admin.compone
     ExamDetailsComponent,
     PlatformAdminComponent,
     SchoolComponent,
-    SchoolAdminComponent
+    SchoolAdminComponent,
+    RenduComponent,
+    RenduFormateurComponent
   ],
   imports: [
     BrowserModule,

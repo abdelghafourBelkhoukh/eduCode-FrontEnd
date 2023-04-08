@@ -1,127 +1,183 @@
 <app-header></app-header>
 
+<div *ngIf="popupRendu" class="w-full h-screen bg-black fixed left-0 top-0 z-50 bg-opacity-70">
+  <div class=" overflow-x-hidden overflow-y-auto  h-modal md:h-full inset-0 z-50 flex justify-center items-center">
+    <div class="w-full max-w-md px-4 h-full md:h-auto">
+      <!-- Modal content -->
+      <div class="bg-white rounded-lg shadow relative ">
+        <div class="flex justify-end p-2">
+          <button type="button" (click)="closePopUpRendu()"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                  data-modal-toggle="authentication-modal">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
+          <h3 class="text-xl font-medium text-gray-900">Rendu</h3>
 
-  <div *ngIf="popupExam" class="w-full h-screen bg-black fixed left-0 top-0 z-50 bg-opacity-70">
-    <div id=""
-         class=" overflow-x-hidden overflow-y-auto  h-modal md:h-full inset-0 z-50 flex justify-center items-center">
-      <div class="w-full max-w-md px-4 h-full md:h-auto">
-        <!-- Modal content -->
-        <div class="bg-white rounded-lg shadow relative ">
-          <div class="flex justify-end p-2">
-            <button type="button" (click)="closePopUp()"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
-                    data-modal-toggle="authentication-modal">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clip-rule="evenodd"></path>
+          <div>
+            <label for="link" class="text-sm font-medium text-gray-900 block mb-2 ">Link</label>
+            <input [(ngModel)]="renduData.link" type="text" name="link" id="link"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="link.." required="">
+          </div>
+          <div>
+            <label for="message" class="text-sm font-medium text-gray-900 block mb-2 ">Message</label>
+            <input [(ngModel)]="renduData.message" type="text" name="message" id="message"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="message.." required="">
+          </div>
+
+          <button (click)="createRendu()" type="submit"
+                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+            Send
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="popupExam" class="w-full h-screen bg-black fixed left-0 top-0 z-50 bg-opacity-70">
+  <div id=""
+       class=" overflow-x-hidden overflow-y-auto  h-modal md:h-full inset-0 z-50 flex justify-center items-center">
+    <div class="w-full max-w-md px-4 h-full md:h-auto">
+      <!-- Modal content -->
+      <div class="bg-white rounded-lg shadow relative ">
+        <div class="flex justify-end p-2">
+          <button type="button" (click)="closePopUp()"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                  data-modal-toggle="authentication-modal">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
+          <h3 *ngIf="!updateStatus" class="text-xl font-medium text-gray-900">Create</h3>
+          <h3 *ngIf="updateStatus" class="text-xl font-medium text-gray-900">Update</h3>
+
+          <div>
+            <label for="title" class="text-sm font-medium text-gray-900 block mb-2 ">examan
+              title</label>
+            <input [(ngModel)]="examData.title" type="text" name="title" id="title"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="title.." required="">
+          </div>
+          <div>
+            <label for="description" class="text-sm font-medium text-gray-900 block mb-2 ">examan
+              description</label>
+            <input [(ngModel)]="examData.description" type="text" name="description" id="description"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="description.." required="">
+          </div>
+          <div>
+            <label for="projectBackround" class="text-sm font-medium text-gray-900 block mb-2 ">examan
+              projectBackround</label>
+            <input [(ngModel)]="examData.projectBackround" type="projectBackround" name="projectBackround"
+                   id="projectBackround"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="projectBackround.." required="">
+          </div>
+          <div>
+            <label for="deadline" class="text-sm font-medium text-gray-900 block mb-2 ">examan
+              deadline</label>
+            <input [(ngModel)]="examData.deadline" type="date" name="deadline" id="deadline"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="deadline.." required="">
+          </div>
+          <div>
+            <label for="promo_id" class="text-sm font-medium text-gray-900 block mb-2 ">examan
+              promo_id</label>
+            <input [(ngModel)]="examData.promo_id" type="number" name="promo_id" id="promo_id"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="promo_id.." required="">
+          </div>
+          <button *ngIf="!updateStatus" (click)="createExam()" type="submit"
+                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+            Create exam
+          </button>
+
+          <button *ngIf="updateStatus" (click)="UpdateExam()" type="submit"
+                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+            Update exam
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- component -->
+<!-- This is an example component -->
+<div
+  class="flex items-center flex-wrap gap-10 justify-center min-h-screen from-[#F9F5F3] via-[#F9F5F3] to-[#F9F5F3] bg-gradient-to-br px-2 py-8 ">
+  <!--  <div class="w-full py-6">-->
+  <div *ngIf="role == 'FORMATEUR'" class="w-full flex justify-end pr-20">
+    <button (click)="openPopUp()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Add Exam
+    </button>
+  </div>
+
+
+  <div class="flex items-center justify-center w-full">
+    <div class="flex items-center gap-4">
+      <img src="https://img.icons8.com/ios/50/000000/graduation-cap.png"/>
+      <span class="text-3xl font-bold text-black">Examans</span>
+    </div>
+  </div>
+  <div class='w-[500px]' *ngFor="let exam of exams; let i = index">
+    <div class='w-full max-w-md  mx-auto bg-white rounded-3xl shadow-xl overflow-hidden'>
+      <div class='max-w-md mx-auto'>
+        <div class='h-[236px] relative'
+             style='background-image:url(https://img.freepik.com/photos-gratuite/personne-tenant-ampoule-capuchon-graduation_23-2148721299.jpg?w=996&t=st=1679510772~exp=1679511372~hmac=03df73304a1d4e113224be003a20e90a976fbc7262a7d0710e41bed443dd793b);background-size:cover;background-position:center'>
+          <div class="inline-block absolute top-[20px] right-[20px]">
+            <!-- Dropdown toggle button -->
+            <button (click)="myFunction(i)"
+                    class="relative z-10 block p-2 text-gray-700 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 focus:ring-blue-300 focus:ring focus:outline-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
               </svg>
             </button>
+            <!-- Dropdown menu -->
+            <div *ngIf="isOpen[i]"
+                 class="absolute right-0 z-20 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl"
+            >
+              <button (click)="preperToUpdate(exam.id, i)" class="w-full px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100 ">
+                Edit
+              </button>
+              <button (click)="delete(exam.id, i)" class="w-full px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform  hover:bg-gray-100 ">
+                Delete
+              </button>
+            </div>
           </div>
-          <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
-            <h3 class="text-xl font-medium text-gray-900">Sign in to our platform</h3>
-
-            <div>
-              <label for="title" class="text-sm font-medium text-gray-900 block mb-2 ">examan
-                title</label>
-              <input [(ngModel)]="examData.title" type="text" name="title" id="title"
-                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                     placeholder="title.." required="">
-            </div>
-            <div>
-              <label for="description" class="text-sm font-medium text-gray-900 block mb-2 ">examan
-                description</label>
-              <input [(ngModel)]="examData.description" type="text" name="description" id="description"
-                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                     placeholder="description.." required="">
-            </div>
-            <div>
-              <label for="projectBackround" class="text-sm font-medium text-gray-900 block mb-2 ">examan
-                projectBackround</label>
-              <input [(ngModel)]="examData.projectBackround" type="projectBackround" name="projectBackround" id="projectBackround"
-                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                     placeholder="projectBackround.." required="">
-            </div>
-            <div>
-              <label for="deadline" class="text-sm font-medium text-gray-900 block mb-2 ">examan
-                deadline</label>
-              <input [(ngModel)]="examData.deadline" type="date" name="deadline" id="deadline"
-                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                     placeholder="deadline.." required="">
-            </div>
-            <div>
-              <label for="promo_id" class="text-sm font-medium text-gray-900 block mb-2 ">examan
-                promo_id</label>
-              <input [(ngModel)]="examData.promo_id" type="number" name="promo_id" id="promo_id"
-                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                     placeholder="promo_id.." required="">
-            </div>
-
-<!--            <div class="flex justify-between">-->
-<!--              <div class="flex items-start">-->
-<!--                <div class="flex items-center h-5">-->
-<!--                  <input id="remember" aria-describedby="remember" type="checkbox"-->
-<!--                         class="bg-gray-50 border border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded "-->
-<!--                         required="">-->
-<!--                </div>-->
-<!--                <div class="text-sm ml-3">-->
-<!--                  <label for="remember" class="font-medium text-gray-900 ">Remember me</label>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <a href="#" class="text-sm text-blue-700 hover:underline ">Lost Password?</a>-->
-<!--            </div>-->
-            <button (click)="createExam()" type="submit"
-                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
-              Create exam
-            </button>
-<!--            <div class="text-sm font-medium text-gray-500 ">-->
-<!--              Not registered? <a href="#" class="text-blue-700 hover:underline ">Create account</a>-->
-<!--            </div>-->
-          </form>
+        </div>
+        <div class='p-4 sm:p-6'>
+          <p class='font-bold text-gray-700 text-[22px] leading-7 mb-1'>{{exam.title}}</p>
+          <p class='text-[#7C7C80] font-[15px] mt-6'>{{exam.description}}</p>
+          <button *ngIf="role == 'STUDENT'" (click)="openPopUpRendu(exam.id)" target='_blank'
+             class='block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center text-white capitalize transition-colors duration-300 transform bg-blue-900 rounded-[14px] hover:bg-blue-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+            Rendu
+          </button>
+          <button *ngIf="role == 'FORMATEUR'" routerLink="/renduFormateur/{{exam.id}}"
+                  class='block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center text-white capitalize transition-colors duration-300 transform bg-blue-900 rounded-[14px] hover:bg-blue-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+            Show Rendus
+          </button>
+          <button routerLink="/exam/{{exam.id}}"
+                  class='block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] hover:bg-[#F2ECE7] hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
+            Show all details
+          </button>
         </div>
       </div>
     </div>
   </div>
-  <!-- component -->
-  <!-- This is an example component -->
-  <div
-    class="flex items-center flex-wrap gap-10 justify-center min-h-screen from-[#F9F5F3] via-[#F9F5F3] to-[#F9F5F3] bg-gradient-to-br px-2 py-8 ">
-    <!--  <div class="w-full py-6">-->
-    <div *ngIf="role == 'FORMATEUR'" class="w-full flex justify-end pr-20">
-      <button (click)="openPopUp()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Add Exam
-      </button>
-    </div>
 
 
-    <div class="flex items-center justify-center w-full">
-      <div class="flex items-center gap-4">
-        <img src="https://img.icons8.com/ios/50/000000/graduation-cap.png"/>
-        <span class="text-3xl font-bold text-black">Examas</span>
-      </div>
-    </div>
-    <div
-      class='w-[500px]' *ngFor="let exam of exams">
-      <div class='w-full max-w-md  mx-auto bg-white rounded-3xl shadow-xl overflow-hidden'>
-        <div class='max-w-md mx-auto'>
-          <div class='h-[236px]'
-               style='background-image:url(https://img.freepik.com/photos-gratuite/personne-tenant-ampoule-capuchon-graduation_23-2148721299.jpg?w=996&t=st=1679510772~exp=1679511372~hmac=03df73304a1d4e113224be003a20e90a976fbc7262a7d0710e41bed443dd793b);background-size:cover;background-position:center'>
-          </div>
-          <div class='p-4 sm:p-6'>
-            <p class='font-bold text-gray-700 text-[22px] leading-7 mb-1'>{{exam.title}}</p>
-            <p class='text-[#7C7C80] font-[15px] mt-6'>{{exam.description}}</p>
-            <a target='_blank' href='foodiesapp://food/1001'
-               class='block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center text-white capitalize transition-colors duration-300 transform bg-blue-900 rounded-[14px] hover:bg-blue-500 focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
-              Rendu
-            </a>
-            <button routerLink="/exam/{{exam.id}}"
-                    class='block mt-1.5 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform rounded-[14px] hover:bg-[#F2ECE7] hover:text-[#000000dd] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80'>
-              Show all details
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
+</div>

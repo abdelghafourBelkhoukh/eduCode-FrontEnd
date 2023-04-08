@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {SchoolService} from "../../core/services/school/school.service";
 import {LoginService} from "../../core/services/login/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-platform-admin',
@@ -9,7 +10,7 @@ import {LoginService} from "../../core/services/login/login.service";
 })
 export class PlatformAdminComponent {
 
-  constructor(private schoolService: SchoolService , private loginService: LoginService) {}
+  constructor(private schoolService: SchoolService , private loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {
     this.getSchools();
@@ -110,5 +111,6 @@ export class PlatformAdminComponent {
 
   logout() {
     this.loginService.logout();
+    this.router.navigate(['/login']);
   }
 }

@@ -35,12 +35,29 @@
                      placeholder="lastName.." required="">
             </div>
           </div>
-          <div>
-            <label for="email" class="text-sm font-medium text-gray-900 block mb-2 ">
-              email</label>
-            <input [(ngModel)]="formateurData.email" type="email" name="email" id="email"
-                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                   placeholder="email.." required="">
+          <div class="flex gap-3">
+            <div class="w-1/2">
+              <label for="email" class="text-sm font-medium text-gray-900 block mb-2 ">
+                email</label>
+              <input [(ngModel)]="formateurData.email" type="email" name="email" id="email"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                     placeholder="email.." required="">
+            </div>
+            <div class="w-1/2">
+              <label for="promo" class="text-sm font-medium text-gray-900 block mb-2 ">
+                promo</label>
+              <select *ngIf="!updateFormateurStatus" name="promo" [(ngModel)]="formateurData.promo_id"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value="0" disabled [selected]="formateurData.promo_id == null">Select Promo</option>
+                <option *ngFor="let promo of promos" [value]="promo.id">{{promo.name}}</option>
+              </select>
+              <select *ngIf="updateFormateurStatus" name="promo" [(ngModel)]="formateurData.promo_id"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value="0" disabled [selected]="formateurData.promo_id == null">Select Promo</option>
+                <option *ngFor="let promo of promos" [value]="promo.id"
+                        [selected]="promo.id == formateurData.promo_id">{{promo.name}}</option>
+              </select>
+            </div>
           </div>
           <div>
             <label for="password" class="text-sm font-medium text-gray-900 block mb-2 ">
@@ -109,234 +126,186 @@
     </div>
   </div>
 </div>
+<!--student popup-->
+<div *ngIf="popupStudent" class="w-full h-screen bg-black fixed left-0 top-0 z-50 bg-opacity-70">
+  <div class=" overflow-x-hidden overflow-y-auto  h-modal md:h-full inset-0 z-50 flex justify-center items-center">
+    <div class="w-full max-w-4xl px-4 h-full md:h-auto">
+      <!-- Modal content -->
+      <div class="bg-white rounded-lg shadow relative ">
+        <div class="flex justify-end p-2">
+          <button type="button" (click)="closePopUpStudent()"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                  data-modal-toggle="authentication-modal">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
+          <h3 *ngIf="!updateStudentStatus" class="text-xl font-medium text-gray-900">Create Student</h3>
+          <h3 *ngIf="updateStudentStatus" class="text-xl font-medium text-gray-900">Update Student</h3>
+          <div class="flex gap-3">
+            <div class="w-1/2">
+              <label for="firstName" class="text-sm font-medium text-gray-900 block mb-2 ">
+                first Name</label>
+              <input [(ngModel)]="studentData.firstName" type="text" name="firstName" id="firstName"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                     placeholder="firstName.." required="">
+            </div>
+            <div class="w-1/2">
+              <label for="lastName" class="text-sm font-medium text-gray-900 block mb-2 ">
+                last Name</label>
+              <input [(ngModel)]="studentData.lastName" type="text" name="lastName" id="lastName"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                     placeholder="lastName.." required="">
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="w-1/2">
+              <label for="email" class="text-sm font-medium text-gray-900 block mb-2 ">
+                email</label>
+              <input [(ngModel)]="studentData.email" type="email" name="email" id="email"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                     placeholder="email.." required="">
+            </div>
+            <div class="w-1/2">
+              <label for="promo" class="text-sm font-medium text-gray-900 block mb-2 ">
+                promo</label>
+              <select *ngIf="!updateStudentStatus" name="promo" [(ngModel)]="studentData.promo_id"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value="0" disabled [selected]="studentData.promo_id == null">Select Promo</option>
+                <option *ngFor="let promo of promos" [value]="promo.id">{{promo.name}}</option>
+              </select>
+              <select *ngIf="updateStudentStatus" name="promo" [(ngModel)]="studentData.promo_id"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                <option value="0" disabled [selected]="studentData.promo_id == null">Select Promo</option>
+                <option *ngFor="let promo of promos" [value]="promo.id"
+                        [selected]="promo.id == studentData.promo_id">{{promo.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="password" class="text-sm font-medium text-gray-900 block mb-2 ">
+              password</label>
+            <input [(ngModel)]="studentData.password" type="password" name="password" id="password"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="password.." required="">
+          </div>
+          <div>
+            <label for="phone" class="text-sm font-medium text-gray-900 block mb-2 ">
+              phone</label>
+            <input [(ngModel)]="studentData.phone" type="number" name="phone" id="phone"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="phone.." required="">
+          </div>
+          <div>
+            <label for="address" class="text-sm font-medium text-gray-900 block mb-2 ">
+              address</label>
+            <input [(ngModel)]="studentData.address" type="text" name="address" id="address"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="address.." required="">
+          </div>
+          <div class="flex gap-3">
+            <div class="w-1/2">
+              <label for="city" class="text-sm font-medium text-gray-900 block mb-2 ">
+                city</label>
+              <input [(ngModel)]="studentData.city" type="text" name="city" id="city"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                     placeholder="city.." required="">
+            </div>
+            <div class="w-1/2">
+              <label for="state" class="text-sm font-medium text-gray-900 block mb-2 ">
+                state</label>
+              <input [(ngModel)]="studentData.state" type="text" name="state" id="state"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                     placeholder="state.." required="">
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="w-1/2">
+              <label for="zip" class="text-sm font-medium text-gray-900 block mb-2 ">
+                zip</label>
+              <input [(ngModel)]="studentData.zip" type="number" name="zip" id="zip"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                     placeholder="zip.." required="">
+            </div>
+            <div class="w-1/2">
+              <label for="country" class="text-sm font-medium text-gray-900 block mb-2 ">
+                country</label>
+              <input [(ngModel)]="studentData.country" type="text" name="country" id="country"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                     placeholder="country.." required="">
+            </div>
+          </div>
 
-<!--&lt;!&ndash;student popup&ndash;&gt;-->
-<!--<div *ngIf="popupStudent" class="w-full h-screen bg-black fixed left-0 top-0 z-50 bg-opacity-70">-->
-<!--  <div id=""-->
-<!--       class=" overflow-x-hidden overflow-y-auto  h-modal md:h-full inset-0 z-50 flex justify-center items-center">-->
-<!--    <div class="w-full max-w-4xl px-4 h-full md:h-auto">-->
-<!--      &lt;!&ndash; Modal content &ndash;&gt;-->
-<!--      <div class="bg-white rounded-lg shadow relative ">-->
-<!--        <div class="flex justify-end p-2">-->
-<!--          <button type="button" (click)="closePopUp()"-->
-<!--                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "-->
-<!--                  data-modal-toggle="authentication-modal">-->
-<!--            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">-->
-<!--              <path fill-rule="evenodd"-->
-<!--                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"-->
-<!--                    clip-rule="evenodd"></path>-->
-<!--            </svg>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">-->
-<!--          <h3 *ngIf="!update" class="text-xl font-medium text-gray-900">Create SchoolAdmin</h3>-->
-<!--          <h3 *ngIf="update" class="text-xl font-medium text-gray-900">Update SchoolAdmin</h3>-->
-<!--          <div class="flex gap-3">-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="firstName" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                first Name</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.firstName" type="text" name="firstName" id="firstName"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="firstName.." required="">-->
-<!--            </div>-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="lastName" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                last Name</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.lastName" type="text" name="lastName" id="lastName"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="lastName.." required="">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            <label for="email" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--              email</label>-->
-<!--            <input [(ngModel)]="schoolAdminData.email" type="email" name="email" id="email"-->
-<!--                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                   placeholder="email.." required="">-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            <label for="password" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--              password</label>-->
-<!--            <input [(ngModel)]="schoolAdminData.password" type="password" name="password" id="password"-->
-<!--                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                   placeholder="password.." required="">-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            <label for="phone" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--              phone</label>-->
-<!--            <input [(ngModel)]="schoolAdminData.phone" type="number" name="phone" id="phone"-->
-<!--                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                   placeholder="phone.." required="">-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            <label for="address" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--              address</label>-->
-<!--            <input [(ngModel)]="schoolAdminData.address" type="text" name="address" id="address"-->
-<!--                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                   placeholder="address.." required="">-->
-<!--          </div>-->
-<!--          <div class="flex gap-3">-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="city" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                city</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.city" type="text" name="city" id="city"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="city.." required="">-->
-<!--            </div>-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="state" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                state</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.state" type="text" name="state" id="state"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="state.." required="">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="flex gap-3">-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="zip" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                zip</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.zip" type="number" name="zip" id="zip"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="zip.." required="">-->
-<!--            </div>-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="country" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                country</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.country" type="text" name="country" id="country"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="country.." required="">-->
-<!--            </div>-->
-<!--          </div>-->
+          <button *ngIf="!updateStudentStatus" (click)="addStudent()" type="submit"
+                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+            Add
+          </button>
+          <button *ngIf="updateStudentStatus" (click)="updateStudent()" type="submit"
+                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+            Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!--promo popup-->
+<div *ngIf="popupPromo" class="w-full h-screen bg-black fixed left-0 top-0 z-50 bg-opacity-70">
+  <div class=" overflow-x-hidden overflow-y-auto  h-modal md:h-full inset-0 z-50 flex justify-center items-center">
+    <div class="w-full max-w-4xl px-4 h-full md:h-auto">
+      <!-- Modal content -->
+      <div class="bg-white rounded-lg shadow relative ">
+        <div class="flex justify-end p-2">
+          <button type="button" (click)="closePopUpPromo()"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                  data-modal-toggle="authentication-modal">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
+          <h3 *ngIf="!updatePromoStatus" class="text-xl font-medium text-gray-900">Create Promo</h3>
+          <h3 *ngIf="updatePromoStatus" class="text-xl font-medium text-gray-900">Update Promo</h3>
 
-<!--          <button *ngIf="!update" (click)="addSchool()" type="submit"-->
-<!--                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">-->
-<!--            Add School-->
-<!--          </button>-->
-<!--          <button *ngIf="update" (click)="updateSchoolAdmin()" type="submit"-->
-<!--                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">-->
-<!--            Save Changes-->
-<!--          </button>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+          <div>
+            <label for="name" class="text-sm font-medium text-gray-900 block mb-2 ">
+              name</label>
+            <input [(ngModel)]="promoData.name" type="text" name="name" id="name"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="name.." required="">
+          </div>
 
-<!--&lt;!&ndash;promo popup&ndash;&gt;-->
-<!--<div *ngIf="popupPromo" class="w-full h-screen bg-black fixed left-0 top-0 z-50 bg-opacity-70">-->
-<!--  <div id=""-->
-<!--       class=" overflow-x-hidden overflow-y-auto  h-modal md:h-full inset-0 z-50 flex justify-center items-center">-->
-<!--    <div class="w-full max-w-4xl px-4 h-full md:h-auto">-->
-<!--      &lt;!&ndash; Modal content &ndash;&gt;-->
-<!--      <div class="bg-white rounded-lg shadow relative ">-->
-<!--        <div class="flex justify-end p-2">-->
-<!--          <button type="button" (click)="closePopUp()"-->
-<!--                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "-->
-<!--                  data-modal-toggle="authentication-modal">-->
-<!--            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">-->
-<!--              <path fill-rule="evenodd"-->
-<!--                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"-->
-<!--                    clip-rule="evenodd"></path>-->
-<!--            </svg>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">-->
-<!--          <h3 *ngIf="!update" class="text-xl font-medium text-gray-900">Create SchoolAdmin</h3>-->
-<!--          <h3 *ngIf="update" class="text-xl font-medium text-gray-900">Update SchoolAdmin</h3>-->
-<!--          <div class="flex gap-3">-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="firstName" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                first Name</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.firstName" type="text" name="firstName" id="firstName"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="firstName.." required="">-->
-<!--            </div>-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="lastName" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                last Name</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.lastName" type="text" name="lastName" id="lastName"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="lastName.." required="">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            <label for="email" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--              email</label>-->
-<!--            <input [(ngModel)]="schoolAdminData.email" type="email" name="email" id="email"-->
-<!--                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                   placeholder="email.." required="">-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            <label for="password" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--              password</label>-->
-<!--            <input [(ngModel)]="schoolAdminData.password" type="password" name="password" id="password"-->
-<!--                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                   placeholder="password.." required="">-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            <label for="phone" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--              phone</label>-->
-<!--            <input [(ngModel)]="schoolAdminData.phone" type="number" name="phone" id="phone"-->
-<!--                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                   placeholder="phone.." required="">-->
-<!--          </div>-->
-<!--          <div>-->
-<!--            <label for="address" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--              address</label>-->
-<!--            <input [(ngModel)]="schoolAdminData.address" type="text" name="address" id="address"-->
-<!--                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                   placeholder="address.." required="">-->
-<!--          </div>-->
-<!--          <div class="flex gap-3">-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="city" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                city</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.city" type="text" name="city" id="city"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="city.." required="">-->
-<!--            </div>-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="state" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                state</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.state" type="text" name="state" id="state"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="state.." required="">-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class="flex gap-3">-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="zip" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                zip</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.zip" type="number" name="zip" id="zip"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="zip.." required="">-->
-<!--            </div>-->
-<!--            <div class="w-1/2">-->
-<!--              <label for="country" class="text-sm font-medium text-gray-900 block mb-2 ">-->
-<!--                country</label>-->
-<!--              <input [(ngModel)]="schoolAdminData.country" type="text" name="country" id="country"-->
-<!--                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "-->
-<!--                     placeholder="country.." required="">-->
-<!--            </div>-->
-<!--          </div>-->
+          <div>
+            <label for="year" class="text-sm font-medium text-gray-900 block mb-2 ">
+              year</label>
+            <input [(ngModel)]="promoData.year" type="number" name="year" id="year"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                   placeholder="year.." required="">
+          </div>
 
-<!--          <button *ngIf="!update" (click)="addSchool()" type="submit"-->
-<!--                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">-->
-<!--            Add School-->
-<!--          </button>-->
-<!--          <button *ngIf="update" (click)="updateSchoolAdmin()" type="submit"-->
-<!--                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">-->
-<!--            Save Changes-->
-<!--          </button>-->
-<!--        </form>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
 
+          <button *ngIf="!updatePromoStatus" (click)="addPromo()" type="submit"
+                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+            Add School
+          </button>
+          <button *ngIf="updatePromoStatus" (click)="updatePromo()" type="submit"
+                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+            Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- component -->
-
 <div class="w-full h-screen flex flex-no-wrap">
   <!-- Sidebar starts -->
   <div style="min-height: 716px"
@@ -471,7 +440,6 @@
   </div>
   <!-- Sidebar ends -->
 
-
   <div class="bg-gray-200 py-10 w-full h-full px-10 overflow-y-auto">
     <div class="w-full h-full rounded">
       <div class="min-h-screen py-5">
@@ -508,6 +476,7 @@
                 <th class="font-semibold text-sm uppercase px-6 py-4"> First Name</th>
                 <th class="font-semibold text-sm uppercase px-6 py-4"> Last Name</th>
                 <th class="font-semibold text-sm uppercase px-6 py-4"> Email</th>
+                <th class="font-semibold text-sm uppercase px-6 py-4"> Promo</th>
                 <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Phone</th>
                 <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Address</th>
                 <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> City</th>
@@ -532,6 +501,12 @@
                 </td>
                 <td class="px-6 py-4">
                   <p class=""> {{formateur.email}} </p>
+                </td>
+                <td class="px-6 py-4">
+                  <ng-container *ngFor="let promo of promos">
+                    <p *ngIf="promo.id == formateur.promo_id">{{promo.name}}</p>
+                  </ng-container>
+                  <p *ngIf="formateur.promo_id == null">Not Assigned</p>
                 </td>
                 <td class="px-6 py-4 text-center"><span
                   class=""> {{formateur.phone}} </span>
@@ -603,6 +578,7 @@
                 <th class="font-semibold text-sm uppercase px-6 py-4"> First Name</th>
                 <th class="font-semibold text-sm uppercase px-6 py-4"> Last Name</th>
                 <th class="font-semibold text-sm uppercase px-6 py-4"> Email</th>
+                <th class="font-semibold text-sm uppercase px-6 py-4"> Promo</th>
                 <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Phone</th>
                 <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> Address</th>
                 <th class="font-semibold text-sm uppercase px-6 py-4 text-center"> City</th>
@@ -628,6 +604,12 @@
                 <td class="px-6 py-4">
                   <p class=""> {{student.email}} </p>
                 </td>
+                <td class="px-6 py-4">
+                  <ng-container *ngFor="let promo of promos">
+                    <p *ngIf="promo.id == student.promo_id">{{promo.name}}</p>
+                  </ng-container>
+                  <p *ngIf="student.promo_id == null">Not Assigned</p>
+                </td>
                 <td class="px-6 py-4 text-center"><span
                   class=""> {{student.phone}} </span>
                 </td>
@@ -646,7 +628,6 @@
           </div>
         </section>
         <!-- student table end-->
-
 
         <!-- promo table strat-->
         <section #promoTable class="min-h-[100vh] p-6">
@@ -720,9 +701,7 @@
           </div>
         </section>
         <!-- promo table end-->
-
       </div>
-
     </div>
   </div>
 </div>

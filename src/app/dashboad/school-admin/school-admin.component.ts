@@ -3,6 +3,8 @@ import {LoginService} from "../../core/services/login/login.service";
 import {StudentService} from "../../core/services/student/student.service";
 import {FormateurService} from "../../core/services/formateur/formateur.service";
 import {PromoService} from "../../core/services/promo/promo.service";
+import {SchoolService} from "../../core/services/school/school.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-school-admin',
@@ -10,13 +12,14 @@ import {PromoService} from "../../core/services/promo/promo.service";
   styleUrls: ['./school-admin.component.css']
 })
 export class SchoolAdminComponent {
+  schoolId: any ;
   popupFormateur: boolean = false;
   popupStudent: boolean = false;
   popupPromo: boolean = false;
 
   updateFormateurStatus: boolean = false;
-  updateStudent: boolean = false;
-  updatePromo: boolean = false;
+  updateStudentStatus: boolean = false;
+  updatePromoStatus: boolean = false;
 
   searchForFormateur: string = '';
   searchForStudent: string = '';
@@ -59,6 +62,7 @@ export class SchoolAdminComponent {
   oldFormateur: any = [];
   oldStudent: any = [];
   oldPromo: any = [];
+  schools: any = [];
 
   formateurs: any = [{
     firstName: "",
@@ -92,20 +96,26 @@ export class SchoolAdminComponent {
     school_id: ""
   }]
 
-  constructor(private loginService: LoginService, private studentService: StudentService, private formateurService: FormateurService, private promoService: PromoService) {
-  }
+  constructor(private loginService: LoginService,
+              private studentService: StudentService,
+              private formateurService: FormateurService,
+              private promoService: PromoService,
+              private schoolService: SchoolService,
+              private router: Router
+  ) {}
 
   ngOnInit() {
     this.getFormateurs();
     this.getStudents();
     this.getPromos();
+    // this.getSchoolId();
   }
-
 
   // popups
   openFormateurPopUp() {
     this.popupFormateur = true;
   }
+
   closePopUpFormateur() {
     this.popupFormateur = false;
   }
@@ -113,14 +123,21 @@ export class SchoolAdminComponent {
   openStudentPopUp() {
     this.popupStudent = true;
   }
+  closePopUpStudent() {
+    this.popupStudent = false;
+  }
 
   openPromoPopUp() {
     this.popupPromo = true;
+  }
+  closePopUpPromo() {
+    this.popupPromo = false;
   }
 
   // logout
   logout() {
     this.loginService.logout();
+    this.router.navigate(['/login']);
   }
 
   // search
@@ -157,11 +174,19 @@ export class SchoolAdminComponent {
   }
 
   prepareUpdateStudent(id: any) {
-    // get student by id
+    this.studentData = this.students.find((student: any) => {
+      return student.id === id;
+    });
+    this.updateStudentStatus = true;
+    this.popupStudent = true;
   }
 
   prepareUpdatePromo(id: any) {
-    // get promo by id
+    this.promoData = this.promos.find((promo: any) => {
+      return promo.id === id;
+    });
+    this.updatePromoStatus = true;
+    this.popupPromo = true;
   }
 
 
@@ -174,11 +199,17 @@ export class SchoolAdminComponent {
   }
 
   deleteStudent(id: any) {
-    // delete student by id
+    this.studentService.deleteStudent(id).subscribe(data => {
+      console.log(data);
+      this.getStudents();
+    });
   }
 
   deletePromo(id: any) {
-    // delete promo by id
+    this.promoService.deletePromo(id).subscribe(data => {
+      console.log(data);
+      this.getPromos();
+    });
   }
 
   // crud
@@ -227,6 +258,46 @@ export class SchoolAdminComponent {
       this.getFormateurs();
       this.updateFormateurStatus = false;
       this.popupFormateur = false;
+    });
+  }
+
+  addStudent() {
+    this.studentService.addStudent(this.studentData).subscribe(data => {
+      console.log(data);
+      this.getStudents();
+      this.popupStudent = false;
+    });
+  }
+
+  updateStudent() {
+    this.studentService.updateStudent(this.studentData).subscribe(data => {
+      console.log(data);
+      this.getStudents();
+      this.updateStudentStatus = false;
+      this.popupStudent = false;
+    });
+  }
+
+  addPromo() {
+    this.promoService.addPromo(this.promoData).subscribe(data => {
+      console.log(data);
+      this.getPromos();
+      this.popupPromo = false;
+    });
+  }
+
+  updatePromo() {
+    this.promoService.updatePromo(this.promoData).subscribe(data => {
+      console.log(data);
+      this.getPromos();
+      this.updatePromoStatus = false;
+      this.popupPromo = false;
+    });
+  }
+
+  private getSchoolId() {
+    this.schoolService.getSchoolByAdminId().subscribe(data => {
+      // console.log(data);
     });
   }
 }

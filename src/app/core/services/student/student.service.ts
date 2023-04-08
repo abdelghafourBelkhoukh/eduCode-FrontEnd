@@ -38,4 +38,29 @@ export class StudentService {
   getStudents() {
     return this.http.get('http://localhost:8080/api/student', {headers: {'Authorization': 'Bearer ' + this.token}});
   }
+
+  addStudent(studentData: any) {
+    return this.http.post('http://localhost:8080/api/student', studentData, {headers: {'Authorization': 'Bearer ' + this.token}});
+  }
+
+  updateStudent(studentData: any) {
+    return this.http.put('http://localhost:8080/api/student', studentData, {headers: {'Authorization': 'Bearer ' + this.token}});
+  }
+
+  deleteStudent(id: any) {
+    return this.http.delete('http://localhost:8080/api/student/' + id, {headers: {'Authorization': 'Bearer ' + this.token}});
+  }
+
+  deleteExam(id: any) {
+    return this.http.delete('http://localhost:8080/api/examan/' + id, {headers: {'Authorization': 'Bearer ' + this.token}});
+  }
+
+  updateExam(examData: any) {
+    console.log(examData);
+    return this.http.put('http://localhost:8080/api/examan', examData, {headers: {'Authorization': 'Bearer ' + this.token}});
+  }
+
+  getStudentByPromoId(promoId: any) {
+    return this.http.get('http://localhost:8080/api/student/promo/' + promoId, {headers: {'Authorization': 'Bearer ' + this.token}});
+  }
 }

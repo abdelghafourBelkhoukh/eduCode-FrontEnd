@@ -29,4 +29,22 @@ export class SchoolService {
   updateSchool(schoolData: any) {
     return this.http.put('http://localhost:8080/api/school', schoolData,  {headers: this.headers});
   }
+
+  getSchoolByAdminId() {
+    const userInfo = this.getUserInfo();
+    return this.http.get('http://localhost:8080/api/school/1/schoolAdmins', {headers: this.headers});
+  }
+
+  getUserInfo() {
+    const token = localStorage.getItem("token");
+    let payload;
+    if (token) {
+      payload = token.split(".")[1];
+      payload = window.atob(payload);
+      console.log(JSON.parse(payload));
+      return JSON.parse(payload);
+    } else {
+      return null;
+    }
+  }
 }

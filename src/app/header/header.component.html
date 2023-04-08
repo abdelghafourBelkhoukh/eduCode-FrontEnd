@@ -4,7 +4,8 @@
   <div class="flex items-center">
     <ul class="flex items-center space-x-6">
       <li class="font-semibold text-gray-700"><a routerLink="/">Home</a></li>
-      <li *ngIf="role == 'STUDENT' || role == 'FORMATEUR'" class="font-semibold text-gray-700" ><a routerLink="/exam">Examan</a></li>
+      <li *ngIf="role == 'STUDENT'" class="font-semibold text-gray-700" ><a routerLink="/student/exam">Examan</a></li>
+      <li *ngIf="role == 'FORMATEUR'" class="font-semibold text-gray-700" ><a routerLink="/formateur/exam">Examan</a></li>
       <li *ngIf="role == 'STUDENT' || role == 'FORMATEUR'" class="font-semibold text-gray-700">Rendu</li>
       <li *ngIf="role == 'PLATFORM_ADMIN'" class="font-semibold text-gray-700"><a routerLink="/platform-admin">Dashboard</a></li>
       <li *ngIf="role == 'SCHOOL'" class="font-semibold text-gray-700"><a routerLink="/school">Dashboard</a></li>
